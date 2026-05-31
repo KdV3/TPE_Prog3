@@ -11,6 +11,9 @@ import java.util.Map;
 
 public class Servicios {
 
+    private static final int URGENCIA_MINIMA = 1;
+    private static final int URGENCIA_MAXIMA = 100;
+
     private final List<Camion> camiones;
     private final Map<String, Paquete> paquetesPorCodigo;
     private final List<Paquete> paquetesConAlimentos;
@@ -23,7 +26,7 @@ public class Servicios {
     /*
      * complejidad temporal: O(C + P), con C cantidad de camiones y P cantidad de paquetes
      * leo cada línea de ambos archivos una vez y se inserta cada paquete en distintas estructuras 
-     * (HashMap y listas por bucket de urgencia en rango 1..100)
+     * (HashMap y listas por bucket de urgencia en rango URGENCIA_MINIMA..URGENCIA_MAXIMA)
      */
     public Servicios(String pathCamiones, String pathPaquetes) {
         this.camiones = new ArrayList<>();
@@ -31,12 +34,6 @@ public class Servicios {
         this.paquetesConAlimentos = new ArrayList<>();
         this.paquetesSinAlimentos = new ArrayList<>();
         this.paquetesPorUrgencia = new HashMap<>();
-
-        /*this.paquetesPorUrgencia = new ArrayList<>(101);
-        //for (int i = 0; i <= 100; i++) { <-- Si se llegara a hacer esto en vez del hashmap, el valor mínimo y máximo del rango tendrían
-                                                que ser variables.
-        //    this.paquetesPorUrgencia.add(new ArrayList<>());
-        }*/
 
         try {
             cargarCamiones(pathCamiones);
@@ -67,38 +64,18 @@ public class Servicios {
 
     /*
      * complejidad temporal: O((max - min + 1) + r), con r la cantidad de paquetes
-     * en el rango de urgencia se concatenan los buckets de urgencia previamente armados
-     * si min > max, se retorna lista vacía.
+     * en el rango de urgencia se concatenan los buckets de urgencia previamente armados.
+     * si min > max o el rango no intersecta [URGENCIA_MINIMA, URGENCIA_MAXIMA], se retorna lista vacía.
      */
-
-    /*public List<Paquete> servicio3(int urgenciaMinima, int urgenciaMaxima) {
-        if (urgenciaMinima > urgenciaMaxima) {
-            return new ArrayList<>();
-        }
-        int desde = Math.max(1, urgenciaMinima);
-        int hasta = Math.min(100, urgenciaMaxima);
-        if (desde > hasta) {
-            return new ArrayList<>();
-        }
-        List<Paquete> resultado = new ArrayList<>();
-        for (int u = desde; u <= hasta; u++) {
-            resultado.addAll(paquetesPorUrgencia.get(u));
-        }
-        return resultado;
-    }*/
-
-
-    /* complejidad temporal: O((max - min + 1) + r), siendo  r la cantidad de paquetes en el rango de urgencia */
-
-    /*Comentario aparte: No estoy seguro sobre la complejidad temporal, pareciera ser la mísma solo que cambia como va a estar creada 
-    la lista de paquetes por urgencia.
-    A diferencia del otro método servicio3, no agregué la verificación de min > max, ya que si eso llega a ocurrir, no se debería
-    entrar al bucle for y tendría que retornar un arreglo vacío de todas formas*/
     public List<Paquete> servicio3(int urgenciaMinima, int urgenciaMaxima) {
+        int desde = Math.max(URGENCIA_MINIMA, urgenciaMinima);
+        int hasta = Math.min(URGENCIA_MAXIMA, urgenciaMaxima);
+
         ArrayList<Paquete> paquetes = new ArrayList<>();
-        for (int i=urgenciaMinima; i<=urgenciaMaxima; i++){
-            if (paquetesPorUrgencia.get(i) != null){
-               paquetes.addAll(paquetesPorUrgencia.get(i)); 
+        for (int i = desde; i <= hasta; i++) {
+            List<Paquete> bucket = paquetesPorUrgencia.get(i);
+            if (bucket != null) {
+                paquetes.addAll(bucket);
             }
         }
         return paquetes;
@@ -145,17 +122,12 @@ public class Servicios {
             } else {
                 paquetesSinAlimentos.add(paquete);
             }
-            /*if (urgencia >= 1 && urgencia <= 100) {
-                paquetesPorUrgencia.get(urgencia).add(paquete);
-            } */
-
             if (paquetesPorUrgencia.get(urgencia) == null){ //Si la key urgencia es null en el hashmap, crea un arreglo en esa posición.
                 paquetesPorUrgencia.put(urgencia, new ArrayList<>());
                 paquetesPorUrgencia.get(urgencia).add(paquete);
             } else { //si no es null, que agregue el paquete a la lista con ese nivel de urgencia.
                 paquetesPorUrgencia.get(urgencia).add(paquete); 
             }
-                
         }
     }
 

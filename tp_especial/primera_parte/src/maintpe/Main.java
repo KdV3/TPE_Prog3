@@ -17,8 +17,7 @@ public class Main {
         }  
 
         Servicios servicios = new Servicios(pathCamiones, pathPaquetes);
-        String codigo_paquete = "P001"; // Código del paquete en una variable. Esto no es nada importante
-                                        // simplemente lo cambio por si los profesores llegan a decir algo
+        String codigo_paquete = "P001";
 
         System.out.println("=== Servicio 1: búsqueda por código ===");
         Paquete p = servicios.servicio1(codigo_paquete);
@@ -31,7 +30,6 @@ public class Main {
         Paquete inexistente = servicios.servicio1("NO_EXISTE");
         System.out.print("Código NO_EXISTE -> ");
         imprimirPaquete(inexistente);
-        //System.out.println("Código NO_EXISTE -> " + (inexistente == null ? "null" : imprimirPaquete(inexistente)));
 
         System.out.println("\n=== Servicio 2: con alimentos ===");
         for (Paquete x : servicios.servicio2(true)) {
@@ -51,14 +49,6 @@ public class Main {
     private static void imprimirPaquete(Paquete p) {
         System.out.println(p); //Delegado al método toString() en la clase Paquete
     }
-
-    /*private static String imprimirPaqueteLinea(Paquete p) {
-        return "id=" + p.getId()
-                + ", código=" + p.getCodigoPaquete()
-                + ", pesoKg=" + p.getPesoKg()
-                + ", alimentos=" + p.isContieneAlimentos()
-                + ", urgencia=" + p.getNivelUrgencia();
-    } */  
    
 }
 
