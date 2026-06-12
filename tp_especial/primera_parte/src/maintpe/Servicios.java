@@ -18,8 +18,6 @@ public class Servicios {
     private final Map<String, Paquete> paquetesPorCodigo;
     private final List<Paquete> paquetesConAlimentos;
     private final List<Paquete> paquetesSinAlimentos;
-    // indice i = nivel de urgencia i (1..100), 0 no se utiliza
-    //private final List<List<Paquete>> paquetesPorUrgencia;
     private Map<Integer, List<Paquete>> paquetesPorUrgencia; /*  Cambio la lista de listas de paquetes por urgencia por un hashmap.
                                                                 con key urgencia y value de listas de paquetes. Se crean las listas
                                                                 cuando hay un paquete con ese nivel de urgencia*/
@@ -148,5 +146,13 @@ public class Servicios {
             }
         }
         return lineas;
+    }
+
+    public List<Camion> getCamiones() {
+        return new ArrayList<>(camiones);
+    }
+
+    public List<Paquete> getPaquetes() {
+        return new ArrayList<>(paquetesPorCodigo.values());
     }
 }

@@ -44,6 +44,28 @@ public class Main {
         for (Paquete x : servicios.servicio3(80, 100)) {
             imprimirPaquete(x);
         }
+
+        System.out.println("\n==================== Segunda Parte ====================");
+        ejecutarSegundaParte(servicios);
+    }
+
+    private static void ejecutarSegundaParte(Servicios servicios) {
+        Backtracking backtracking = new Backtracking(servicios.getCamiones(), servicios.getPaquetes());
+        Solucion solucionBacktracking = backtracking.resolver();
+        if (solucionBacktracking != null) {
+            System.out.println();
+            solucionBacktracking.imprimir("Backtracking",
+                    "Métrica para analizar el costo de la solución (cantidad de estados generados)");
+        } else {
+            System.out.println("\nBacktracking");
+            System.out.println("No se encontró solución con Backtracking.");
+        }
+
+        Greedy greedy = new Greedy();
+        Solucion solucionGreedy = greedy.resolver(servicios.getCamiones(), servicios.getPaquetes());
+        System.out.println();
+        solucionGreedy.imprimir("Greedy",
+                "Métrica para analizar el costo de la solución (cantidad de candidatos considerados)");
     }
 
     private static void imprimirPaquete(Paquete p) {
