@@ -28,4 +28,10 @@ public class Camion {
     public int getCapacidadKg() {
         return capacidadKg;
     }
+
+    @Override
+    public String toString() {
+        return "Camion{id=" + id + ", patente=" + patente + ", refrigerado=" + refrigerado
+                + ", capacidadKg=" + capacidadKg + "}";
+    }
 }
