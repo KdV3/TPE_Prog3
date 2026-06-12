@@ -4,10 +4,7 @@ public class Main {
     public static void main(String[] args) {
         String pathCamiones;
         String pathPaquetes;
-        System.out.println(System.getProperty("user.dir")); //Esto muestra en que ruta estas parado, no es relevante al trabajo.
-        
-        // Si te paras en la carpeta src no anda. Eso es por la ruta de los archivos en el else. No logré encontrar una solución aún
-        // aunque la solución puede que sea que el trabajo siempre se abra en la misma carpeta.
+
         if (args.length >= 2) {
             pathCamiones = args[0];
             pathPaquetes = args[1];
@@ -24,7 +21,7 @@ public class Main {
         if (p != null) {
             imprimirPaquete(p);
         } else {
-            System.out.println("No existe paquete con código " + codigo_paquete); //Variable con el código del paquete que no existe.
+            System.out.println("No existe paquete con código " + codigo_paquete);
         }
 
         Paquete inexistente = servicios.servicio1("NO_EXISTE");
@@ -69,7 +66,7 @@ public class Main {
     }
 
     private static void imprimirPaquete(Paquete p) {
-        System.out.println(p); //Delegado al método toString() en la clase Paquete
+        System.out.println(p);
     }
    
 }

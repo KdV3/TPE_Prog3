@@ -18,9 +18,7 @@ public class Servicios {
     private final Map<String, Paquete> paquetesPorCodigo;
     private final List<Paquete> paquetesConAlimentos;
     private final List<Paquete> paquetesSinAlimentos;
-    private Map<Integer, List<Paquete>> paquetesPorUrgencia; /*  Cambio la lista de listas de paquetes por urgencia por un hashmap.
-                                                                con key urgencia y value de listas de paquetes. Se crean las listas
-                                                                cuando hay un paquete con ese nivel de urgencia*/
+    private Map<Integer, List<Paquete>> paquetesPorUrgencia; 
     /*
      * complejidad temporal: O(C + P), con C cantidad de camiones y P cantidad de paquetes
      * leo cada línea de ambos archivos una vez y se inserta cada paquete en distintas estructuras 
@@ -120,10 +118,11 @@ public class Servicios {
             } else {
                 paquetesSinAlimentos.add(paquete);
             }
-            if (paquetesPorUrgencia.get(urgencia) == null){ //Si la key urgencia es null en el hashmap, crea un arreglo en esa posición.
+            
+            if (paquetesPorUrgencia.get(urgencia) == null){
                 paquetesPorUrgencia.put(urgencia, new ArrayList<>());
                 paquetesPorUrgencia.get(urgencia).add(paquete);
-            } else { //si no es null, que agregue el paquete a la lista con ese nivel de urgencia.
+            } else {
                 paquetesPorUrgencia.get(urgencia).add(paquete); 
             }
         }

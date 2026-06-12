@@ -57,8 +57,8 @@ public class Greedy {
 
             int espacioRestante = camiones.get(i).getCapacidadKg() - cargaPorCamion[i] - paquete.getPesoKg();
             if (espacioRestante < menorEspacioRestante) {
-                menorEspacioRestante = espacioRestante;
-                mejorIndice = i;
+                    menorEspacioRestante = espacioRestante;
+                    mejorIndice = i;      
             }
         }
 
@@ -69,6 +69,7 @@ public class Greedy {
         if (paquete.isContieneAlimentos() && !camion.isRefrigerado()) {
             return false;
         }
+
         return cargaActual + paquete.getPesoKg() <= camion.getCapacidadKg();
     }
 
